@@ -1,4 +1,7 @@
-duckdb
+dash
+dash-bootstrap-components
 pandas
+numpy
 plotly
-jupyter
+gunicorn
+pyarrow
