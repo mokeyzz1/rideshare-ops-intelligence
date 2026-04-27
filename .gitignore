@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+.venv/
+
+# Large data files (parquet ~500MB each)
+data/*.parquet
+data/*.csv

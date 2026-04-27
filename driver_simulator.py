@@ -130,13 +130,25 @@ TOP_ZONES = {
     23: ("Bloomfield/Emerson Hill", "Staten Island", 0.15),
 }
 
-# Hourly demand multipliers (normalized, peak at 6 PM = 1.0)
-HOURLY_DEMAND_MULTIPLIER = {
-    0: 0.45, 1: 0.30, 2: 0.22, 3: 0.15, 4: 0.12, 5: 0.15,
-    6: 0.25, 7: 0.45, 8: 0.60, 9: 0.55, 10: 0.55, 11: 0.60,
-    12: 0.65, 13: 0.65, 14: 0.70, 15: 0.75, 16: 0.85, 17: 0.95,
-    18: 1.00, 19: 0.95, 20: 0.90, 21: 0.85, 22: 0.75, 23: 0.60,
-}
+# Hourly demand multipliers - load from real TLC data if available
+def _load_hourly_multipliers():
+    """Load real hourly multipliers from preprocessed TLC data."""
+    from pathlib import Path
+    import json
+    patterns_file = Path(__file__).parent / "data" / "demand_patterns.json"
+    if patterns_file.exists():
+        with open(patterns_file) as f:
+            data = json.load(f)
+        return {int(h): v for h, v in data["hourly_multipliers"].items()}
+    # Fallback to estimates
+    return {
+        0: 0.45, 1: 0.30, 2: 0.22, 3: 0.15, 4: 0.12, 5: 0.15,
+        6: 0.25, 7: 0.45, 8: 0.60, 9: 0.55, 10: 0.55, 11: 0.60,
+        12: 0.65, 13: 0.65, 14: 0.70, 15: 0.75, 16: 0.85, 17: 0.95,
+        18: 1.00, 19: 0.95, 20: 0.90, 21: 0.85, 22: 0.75, 23: 0.60,
+    }
+
+HOURLY_DEMAND_MULTIPLIER = _load_hourly_multipliers()
 
 # Supply gap zones identified in notebook Section 7
 SUPPLY_GAP_ZONES = {
