@@ -2,6 +2,8 @@
 
 Real-time operations dashboard for NYC rideshare fleet management. Built with Dash/Plotly and powered by 62M TLC trip records.
 
+**Live Demo:** https://rideshare-ops-intelligence.onrender.com
+
 ![Dashboard](assets/screenshot.png)
 
 ## Overview
